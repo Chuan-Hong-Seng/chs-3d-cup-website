@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Split layout (text left, cup right): desktop, or a phone held sideways. Keep in sync with Rig in cup-scene.tsx. */
+@custom-variant wide {
+  @media (min-width: 1024px) {
+    @slot;
+  }
+  @media (orientation: landscape) and (max-height: 520px) {
+    @slot;
+  }
+}
+/* Phone held sideways: very little height, so everything gets compact. */
+@custom-variant phoneland (@media (orientation: landscape) and (max-height: 520px));
+/* Short portrait screens (iPhone SE, small Androids). */
+@custom-variant short (@media (max-height: 720px));
+
 @theme inline {
   --font-sans: var(--font-poppins), "PingFang SC", "Noto Sans SC", sans-serif;
 }

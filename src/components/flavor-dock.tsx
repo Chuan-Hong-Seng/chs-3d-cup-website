@@ -139,7 +139,7 @@ export function FlavorDock({
       aria-label="Choose a flavour"
       onPointerMove={onPointerMove}
       onPointerLeave={reset}
-      className="group/dock relative z-20 mx-auto mb-4 mt-3 [--dock-size:46px] sm:[--dock-size:54px]"
+      className="group/dock relative z-20 mx-auto mb-[max(0.75rem,env(safe-area-inset-bottom))] mt-2 [--dock-size:clamp(32px,10.2vw,46px)] sm:mb-4 sm:mt-3 sm:[--dock-size:54px] phoneland:mb-2 phoneland:mt-1 phoneland:[--dock-size:38px]"
     >
       {/* Tilted glass shelf */}
       <div
@@ -150,7 +150,7 @@ export function FlavorDock({
         <div className="absolute inset-x-3 top-0 h-px bg-white/90" />
       </div>
 
-      <ul className="relative flex items-end gap-2 px-4 pb-3 sm:gap-3">
+      <ul className="relative flex items-end gap-1.5 px-3 pb-3 sm:gap-3 sm:px-4">
         {flavors.map((f, i) => {
           const isActive = i === index;
           const scale = scales[i] ?? 1;

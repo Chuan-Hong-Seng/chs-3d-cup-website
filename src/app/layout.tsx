@@ -26,6 +26,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#b3261e",
+  // Draw under the iPhone notch / home bar; header and dock pad themselves with safe-area insets.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

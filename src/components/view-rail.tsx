@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import type { CupView } from "./cup-scene";
 
-const STEP = 48; // button (44px) + gap (4px)
+// Button size comes from --rail-btn (smaller on phones); gap between buttons is 4px.
 
 const icon = "h-5 w-5";
 const views: { id: CupView; label: string; icon: (seasonChar: string) => ReactNode }[] = [
@@ -58,15 +58,15 @@ export function ViewRail({ view, accent, seasonChar, onPick }: Props) {
   return (
     <nav
       aria-label="Cup views"
-      className="absolute right-3 top-[30%] z-20 -translate-y-1/2 lg:right-10 lg:top-1/2"
+      className="absolute right-2.5 top-[31%] z-20 -translate-y-1/2 [--rail-btn:38px] sm:right-4 wide:right-10 wide:top-1/2 wide:[--rail-btn:44px] phoneland:right-4 phoneland:[--rail-btn:34px]"
     >
-      <div className="relative flex flex-col gap-1 rounded-full bg-white/40 p-1.5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.3)] ring-1 ring-white/70 backdrop-blur-2xl">
+      <div className="relative flex flex-col gap-1 rounded-full bg-white/40 p-1 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.3)] ring-1 ring-white/70 backdrop-blur-2xl">
         {/* Sliding indicator */}
         <span
           aria-hidden
-          className="absolute left-1.5 top-1.5 h-11 w-11 rounded-full bg-white shadow-md transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+          className="absolute left-1 top-1 h-[var(--rail-btn)] w-[var(--rail-btn)] rounded-full bg-white shadow-md transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
           style={{
-            transform: `translateY(${Math.max(activeIndex, 0) * STEP}px)`,
+            transform: `translateY(calc(${Math.max(activeIndex, 0)} * (var(--rail-btn) + 4px)))`,
             opacity: activeIndex >= 0 ? 1 : 0,
           }}
         />
@@ -79,7 +79,7 @@ export function ViewRail({ view, accent, seasonChar, onPick }: Props) {
               aria-pressed={isActive}
               aria-label={v.label}
               onClick={() => onPick(v.id)}
-              className="group/v relative flex h-11 w-11 items-center justify-center rounded-full text-neutral-600 transition-colors duration-300 hover:text-neutral-900"
+              className="group/v relative flex h-[var(--rail-btn)] w-[var(--rail-btn)] items-center justify-center rounded-full text-neutral-600 transition-colors duration-300 hover:text-neutral-900"
               style={isActive ? { color: accent } : undefined}
             >
               {v.icon(seasonChar)}

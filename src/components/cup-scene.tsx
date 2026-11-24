@@ -48,20 +48,28 @@ function Rig({ view, viewKey }: { view: CupView | null; viewKey: number }) {
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
   const flying = useRef(false);
   const { width, height } = useThree((s) => s.size);
-  const desktop = width >= 1024;
   const aspect = width / height;
+  // Same rule as the `wide` CSS variant: desktop, or a phone held sideways.
+  const wide = width >= 1024 || (aspect > 1 && height <= 520);
+  const phoneLandscape = wide && width < 1024;
 
-  // Cup ~50% of screen height on desktop; ~55% of screen width on mobile.
-  const fitHeight = CUP.height / (0.5 * 2 * TAN);
-  const fitWidth = (CUP.topRadius * 2) / (0.55 * 2 * TAN * aspect);
-  const distance = desktop ? fitHeight : Math.max(fitHeight * 0.85, fitWidth);
+  // Distance at which the cup fills a given fraction of the screen height / width.
+  const forHeight = (f: number) => CUP.height / (f * 2 * TAN);
+  const forWidth = (f: number) => (CUP.topRadius * 2) / (f * 2 * TAN * aspect);
+
+  // Wide: cup ~50% of height (a bit less on a sideways phone so the steam fits).
+  // Portrait: cup ≤ 55% of width AND ≤ 34% of height, so it stays above the text on short phones.
+  const distance = wide
+    ? forHeight(phoneLandscape ? 0.46 : 0.5)
+    : Math.max(forWidth(0.55), forHeight(0.34));
 
   useEffect(() => {
-    if (desktop) camera.setViewOffset(width, height, -width * 0.2, 0, width, height);
-    else camera.setViewOffset(width, height, 0, height * 0.13, width, height);
+    if (wide) camera.setViewOffset(width, height, -width * 0.2, 0, width, height);
+    // Portrait: centre the cup at ~31% from the top (between header and text).
+    else camera.setViewOffset(width, height, 0, height * 0.19, width, height);
     camera.updateProjectionMatrix();
     camera.position.setLength(distance);
-  }, [camera, width, height, desktop, distance]);
+  }, [camera, width, height, wide, distance]);
 
   // Start a camera flight whenever a view button is pressed (viewKey bumps on every press).
   useEffect(() => {

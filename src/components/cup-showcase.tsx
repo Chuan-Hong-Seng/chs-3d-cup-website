@@ -16,7 +16,7 @@ function LetterTitle({ text }: { text: string }) {
   return (
     <h1
       aria-label={text}
-      className="mt-3 text-4xl font-bold leading-[1.08] tracking-tight text-neutral-900 sm:text-6xl"
+      className="mt-2 text-[clamp(1.75rem,8.5vw,2.25rem)] font-bold leading-[1.08] tracking-tight text-neutral-900 sm:mt-3 sm:text-6xl phoneland:text-3xl"
     >
       {text.split(" ").map((word, w) => (
         <span key={w} aria-hidden className="inline-block whitespace-nowrap">
@@ -91,7 +91,7 @@ export function CupShowcase() {
   return (
     <div
       onPointerMove={onPointerMove}
-      className="relative flex h-dvh min-h-[600px] flex-col overflow-hidden transition-colors duration-1000"
+      className="relative flex h-dvh flex-col overflow-hidden transition-colors duration-1000"
       style={{ backgroundColor: active.background }}
     >
       <IntroLoader accent={active.accent} />
@@ -99,7 +99,7 @@ export function CupShowcase() {
       {/* Accent glow behind the cup */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 transition-[background] duration-1000 [--gx:50%] [--gy:30%] lg:[--gx:70%] lg:[--gy:47%]"
+        className="pointer-events-none absolute inset-0 transition-[background] duration-1000 [--gx:50%] [--gy:30%] wide:[--gx:70%] wide:[--gy:47%]"
         style={{
           background: `radial-gradient(circle at var(--gx) var(--gy), ${active.accent}55 0%, ${active.accent}1a 28%, transparent 55%)`,
         }}
@@ -119,14 +119,14 @@ export function CupShowcase() {
       <span
         key={`wm-${active.id}`}
         aria-hidden
-        className="animate-watermark pointer-events-none absolute left-1/2 top-[30%] select-none text-[40vh] font-black leading-none lg:left-[70%] lg:top-[47%] lg:text-[50vh]"
+        className="animate-watermark pointer-events-none absolute left-1/2 top-[30%] select-none text-[34vh] font-black leading-none wide:left-[70%] wide:top-[47%] wide:text-[50vh]"
         style={{ color: active.accent }}
       >
         {active.seasonChar}
       </span>
 
       {/* Brand bar */}
-      <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-6 pt-6">
+      <header className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-6 sm:pt-6 phoneland:pt-3">
         <p className="text-sm font-semibold tracking-tight text-neutral-900">
           Chuan Heng Bee <span className="font-normal text-neutral-500">· 金兴美</span>
         </p>
@@ -149,9 +149,9 @@ export function CupShowcase() {
       {/* Quick views beside the cup */}
       <ViewRail view={view} accent={active.accent} seasonChar={active.seasonChar} onPick={pickView} />
 
-      <main className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-6 pb-4 lg:justify-center lg:pb-0">
+      <main className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-3 sm:px-6 sm:pb-4 wide:justify-center wide:pb-0">
         {/* Copy */}
-        <section key={active.id} className="min-w-0 lg:max-w-[46%]">
+        <section key={active.id} className="min-w-0 wide:max-w-[46%]">
           <p
             className="animate-rise text-xs font-semibold uppercase tracking-[0.35em]"
             style={{ color: active.accent }}
@@ -168,22 +168,22 @@ export function CupShowcase() {
           </p>
           <LetterTitle text={active.name} />
           <p
-            className="animate-rise mt-2 text-2xl font-semibold text-neutral-800 sm:text-3xl"
+            className="animate-rise mt-1.5 text-xl font-semibold text-neutral-800 sm:mt-2 sm:text-3xl phoneland:text-lg"
             style={{ animationDelay: "380ms" }}
           >
             {active.chinese}
           </p>
           <p
-            className="animate-rise mt-5 max-w-md font-light text-neutral-700"
+            className="animate-rise mt-3 max-w-md text-sm font-light text-neutral-700 sm:mt-5 sm:text-base short:mt-2 phoneland:hidden"
             style={{ animationDelay: "460ms" }}
           >
             {active.ingredients}. Brewed hot, right in the cup.
           </p>
-          <ul className="mt-6 flex flex-wrap gap-2">
+          <ul className="mt-4 flex flex-wrap gap-1.5 sm:mt-6 sm:gap-2 short:hidden">
             {highlights.map((h, i) => (
               <li
                 key={h}
-                className="animate-rise rounded-full bg-white/55 px-3 py-1.5 text-xs font-medium text-neutral-800 ring-1 ring-black/5 backdrop-blur"
+                className="animate-rise rounded-full bg-white/55 px-2.5 py-1 text-[11px] font-medium text-neutral-800 ring-1 ring-black/5 backdrop-blur sm:px-3 sm:py-1.5 sm:text-xs"
                 style={{ animationDelay: `${540 + i * 70}ms` }}
               >
                 {h}
@@ -193,7 +193,7 @@ export function CupShowcase() {
         </section>
       </main>
 
-      <p className="pointer-events-none relative z-10 hidden text-center text-xs text-neutral-600 sm:block">
+      <p className="pointer-events-none relative z-10 hidden text-center text-xs text-neutral-600 sm:block phoneland:hidden">
         Drag to rotate · Pinch to zoom · ← → to switch
       </p>
 
